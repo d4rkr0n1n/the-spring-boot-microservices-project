@@ -22,14 +22,6 @@ public class NotesResponseService {
     return ResponseHelper.ok(notesService.retrieveAllNotes());
   }
 
-  public ResponseEntity<Note> createNotes(String contents) {
-    return ResponseHelper.created(notesService.createNotesC(contents));
-  }
-
-  public ResponseEntity<Note> createNotesRandom() {
-    return ResponseHelper.created(notesService.createNotes());
-  }
-
   public ResponseEntity<Note> retrieveNote(UUID id) {
     try {
       return ResponseHelper.ok(notesService.retrieveNote(id));
@@ -38,20 +30,17 @@ public class NotesResponseService {
     }
   }
 
-  public ResponseEntity<Note> updateNote(UUID id, String updatedContents) {
-    try {
-      return ResponseHelper.ok(notesService.updateNote(id, updatedContents));
-    } catch (Exception e) {
-      return ResponseHelper.notFound();
-    }
+  public ResponseEntity<Note> saveNote(Note note) {
+    return ResponseHelper.created(notesService.saveNote(note));
   }
 
-  public ResponseEntity<Note> deleteNote(UUID id) {
-    try {
-      return ResponseHelper.ok(notesService.deleteNote(id));
-    } catch (Exception e) {
-      return ResponseHelper.notFound();
-    }
+  public ResponseEntity<Long> countNotes() {
+    return ResponseHelper.created(notesService.getCount());
+  }
+
+  public ResponseEntity<String> deleteNote(Note note) {
+    notesService.deleteNote(note);
+    return ResponseHelper.ok("Note deleted");
   }
 
 }
