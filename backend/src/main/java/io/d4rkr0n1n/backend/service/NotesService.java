@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import io.d4rkr0n1n.backend.clients.DatabaseClient;
 import io.d4rkr0n1n.backend.model.Note;
 import io.d4rkr0n1n.backend.repository.NotesRepository;
 import io.d4rkr0n1n.backend.utils.TimeUtils;
@@ -20,14 +21,15 @@ import lombok.extern.java.Log;
 public class NotesService {
 
   private final NotesRepository notesRepository;
+  private final DatabaseClient databaseClient;
 
-  public NotesService(NotesRepository sampleRepository) {
+  public NotesService(NotesRepository sampleRepository,DatabaseClient databaseClient) {
     this.notesRepository = sampleRepository;
+    this.databaseClient = databaseClient;
   }
 
   public Long checkDB() {
-
-    return notesRepository.count();
+    return databaseClient.countNotes();
   }
 
   public List<Note> retrieveAllNotes() {
